@@ -78,6 +78,28 @@
           }
         }
       },
+      "put": {
+        "summary": "Update task with given ID",
+        "tags": ["Tasks"],
+        "parameters": [
+          {
+            "name": "task",
+            "in": "body",
+            "description": "Task with new values of properties",
+            "schema": {
+              "$ref": "#/definitions/UpdateTask"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Task is updated",
+            "schema": {
+              "$ref": "#/definitions/Task"
+            }
+          }
+        }
+      },
       "delete": {
         "summary": "Delete task with given ID",
         "tags": ["Tasks"],
@@ -126,6 +148,20 @@
     "CreateTasks": {
       "type": "array",
       "$ref": "#/definitions/CreateTask"
+    },
+    "UpdateTask": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "status":{
+          "type":"string"
+        }
+      }
+    },
+    "UpdateTasks": {
+      "type": "array",
+      "$ref": "#/definitions/UpdateTask"
     }
   }
 }

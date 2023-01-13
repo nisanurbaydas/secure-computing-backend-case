@@ -1,5 +1,5 @@
 const httpStatus = require('http-status');
-const { list, insert, findOne, remove } = require('../services/Task');
+const { list, insert, findOne, remove, modify } = require('../services/Task');
 const ApiError = require('../errors/ApiError');
 
 //list all tasks
@@ -37,6 +37,19 @@ const fetchTask = (req, res, next) => {
     });
 };
 
+//update a task
+const update = (req, res) => {
+  if (!req.params?.id) {
+    return res.status(httpStatus.BAD_REQUEST).send({ message: 'Missing information' });
+  }
+  modify(req.params?.id, req.body)
+    .then((response) => {
+      if (!response) return res.status(httpStatus.NOT_FOUND).send({ message: 'Task not found' });
+      res.status(httpStatus.OK).send(response);
+    })
+    .catch((e) => res.status(httpStatus.INTERNAL_SERVER_ERROR).send(e));
+};
+
 const deleteTask = (req, res, next) => {
   remove(req.params?.id)
     .then((deletedItem) => {
@@ -53,4 +66,5 @@ module.exports = {
   create,
   fetchTask,
   deleteTask,
+  update,
 };

@@ -16,6 +16,11 @@ const findOne = (where) => {
   return Task.findOne(where);
 };
 
+//update a task
+const modify = (id, data) => {
+  return Task.findByIdAndUpdate(id, data, { new: true });
+};
+
 //delete a task
 const remove = (id) => {
   return Task.findByIdAndDelete(id);
@@ -26,4 +31,5 @@ module.exports = {
   insert,
   findOne,
   remove,
+  modify,
 };
