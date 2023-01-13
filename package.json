@@ -1,0 +1,29 @@
+{
+  "name": "secure-computing-backend-case",
+  "version": "1.0.0",
+  "description": "todo-app",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nisanurbaydas/secure-computing-backend-case.git"
+  },
+  "author": "nisa nur baydas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nisanurbaydas/secure-computing-backend-case/issues"
+  },
+  "homepage": "https://github.com/nisanurbaydas/secure-computing-backend-case#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.8.3",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20",
+    "prettier": "^2.8.1"
+  }
+}
