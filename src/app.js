@@ -1,10 +1,12 @@
 const express = require('express');
 
 const config = require('./config/index');
+const loaders = require('./loaders');
 
 const app = express();
 
 config();
+loaders();
 
 app.use(express.json());
 
