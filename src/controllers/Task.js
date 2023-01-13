@@ -1,49 +1,52 @@
 const httpStatus = require('http-status');
 const { list, insert, findOne, remove } = require('../services/Task');
+const ApiError = require('../errors/ApiError');
 
 //list all tasks
-const index = (req, res) => {
+const index = (req, res, next) => {
   list()
     .then((itemList) => {
-      if (!itemList) res.status(httpStatus.INTERNAL_SERVER_ERROR).send('There is no any record');
-
       res.status(httpStatus.OK).send(itemList);
     })
     .catch((e) => {
-      res.status(httpStatus.INTERNAL_SERVER_ERROR).send(e);
+      next(new ApiError(e?.message));
     });
 };
 
 //create a task
-const create = (req, res) => {
+const create = (req, res, next) => {
   insert(req.body)
     .then((response) => {
       res.status(httpStatus.CREATED).send(response);
     })
     .catch((e) => {
-      res.status(httpStatus.INTERNAL_SERVER_ERROR).send(e);
+      next(new ApiError(e?.message));
     });
 };
 
 //get a task with id
-const fetchTask = (req, res) => {
+const fetchTask = (req, res, next) => {
   findOne({ _id: req.params.id })
     .then((task) => {
-      if (!task) res.res.status(httpStatus.NOT_FOUND).send('No such a record');
+      if (!task) return next(new ApiError('No such a record', httpStatus.NOT_FOUND));
 
       res.status(httpStatus.OK).send(task);
     })
-    .catch((e) => res.status(httpStatus.INTERNAL_SERVER_ERROR).send(e));
+    .catch((e) => {
+      next(new ApiError(e?.message));
+    });
 };
 
-const deleteTask = (req, res) => {
+const deleteTask = (req, res, next) => {
   remove(req.params?.id)
     .then((deletedItem) => {
-      if (!deletedItem) res.res.status(httpStatus.NOT_FOUND).send('No such a record');
+      if (!deletedItem) return next(new ApiError('No such a record', httpStatus.NOT_FOUND));
 
       res.status(httpStatus.OK).send(deletedItem);
     })
-    .catch((e) => res.status(httpStatus.INTERNAL_SERVER_ERROR).send(e));
+    .catch((e) => {
+      next(new ApiError(e?.message));
+    });
 };
 module.exports = {
   index,
