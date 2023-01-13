@@ -1,0 +1,131 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Todo App",
+    "description": "TODO APP WITH NODE JS and EXPRESS JS",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Tasks"
+    }
+  ],
+
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/tasks": {
+      "get": {
+        "tags": ["Tasks"],
+        "summary": "Get all tasks in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Task"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Tasks"],
+        "summary": "Create a new task in system",
+        "parameters": [
+          {
+            "name": "task",
+            "in": "body",
+            "description": "Task that we want to create",
+            "schema": {
+              "$ref": "#/definitions/CreateTask"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "New Task is Created",
+            "schema": {
+              "$ref": "#/definitions/Task"
+            }
+          }
+        }
+      }
+    },
+    "/tasks/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ID of user that we want to find",
+          "type": "string"
+        }
+      ],
+      "get":{
+        "summary": "Get one task with given id",
+        "tags": ["Tasks"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Task"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete task with given ID",
+        "tags": ["Tasks"],
+        "responses": {
+          "200": {
+            "description": "Task is deleted",
+            "schema": {
+              "$ref": "#/definitions/Task"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Task": {
+      "required": ["name", "_id", "status"],
+      "properties": {
+        "_id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "name": {
+          "type": "string"
+        },
+        "status":{
+          "type":"string"
+        }
+      }
+    },
+    "Tasks": {
+      "type": "array",
+      "$ref": "#/definitions/Task"
+    },
+    "CreateTask": {
+      "required": ["name", "status"],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "status":{
+          "type":"string"
+        }
+      }
+    },
+    "CreateTasks": {
+      "type": "array",
+      "$ref": "#/definitions/CreateTask"
+    }
+  }
+}

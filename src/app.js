@@ -3,6 +3,8 @@ const express = require('express');
 const config = require('./config/index');
 const loaders = require('./loaders');
 const errorHandler = require('./middlewares/errorHandler');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('../swagger.json');
 
 const { TaskRoutes } = require('./routes');
 
@@ -12,6 +14,8 @@ config();
 loaders();
 
 app.use(express.json());
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const PORT = process.env.APP_PORT;
 app.listen(PORT, () => {
