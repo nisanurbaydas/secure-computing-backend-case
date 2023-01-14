@@ -31,3 +31,5 @@ app.listen(PORT, () => {
 
   app.use(errorHandler);
 });
+
+module.exports = app;
